@@ -1,2 +1,5 @@
 # ALGtestbot
-Test bot
+Тестовый бот - Telegram
+синхронный
+
+базовые функции
