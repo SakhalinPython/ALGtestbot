@@ -21,7 +21,7 @@ def start_message(message):
         users[message.from_user.id] = [message.from_user.first_name, message.chat.id]
     bot.send_message(message.chat.id, f"{message.from_user.first_name},"
                                       f" {choice(greetings)}")
-    bot.send_message(message.chat.id, 'Доступные команды /time , /users')
+    bot.send_message(message.chat.id, 'Доступные команды /time , /users, /pictures')
 
 @bot.message_handler(commands=['time'])
 def current_time(message):
@@ -35,6 +35,11 @@ def current_time(message):
             bot.send_message(message.chat.id, f'{id} - {nickname[0]}')
     else:
         bot.send_message(message.chat.id, f'Список пользователей пуст!')
+
+@bot.message_handler(commands=['pictures'])
+def send_pictures(message):
+    bot.send_photo(message.chat.id, 'https://tongethai.net/wp-content/uploads/2013/06/product-girdle-cake-fruits-600x400.jpg')
+    bot.send_animation(message.chat.id, 'https://otvet.imgsmail.ru/download/25657775_caa6aed8162fbde2185fd2436db729df_800.gif')
 
 @bot.message_handler(content_types='text')
 def my_text(message):
@@ -54,9 +59,8 @@ def my_text(message):
         bot.send_message(message.chat.id, 'Пиши команду qr и ссылку через пробел')
         bot.send_message(message.chat.id, 'qr Https://ya.ru/')
     elif message.text.lower() == 'mem':
-        print('mem')
+        bot.send_video(message.chat.id, open('video/Cat dancing meme.mp4', 'rb'))
     elif message.text.lower() == 'txt':
         print('txt')
 
 bot.infinity_polling()
-
