@@ -23,7 +23,18 @@ def start_message(message):
 @bot.message_handler(commands=['time'])
 def current_time(message):
     bot.send_message(message.chat.id, f'Твое время - {datetime.datetime.now()}')
+    bot.send_message(message.chat.id, 'cc')
 
-
+@bot.message_handler(content_types='text')
+def my_text(message):
+    if message.text.lower() == 'покажи список':
+        bot.send_message(message.chat.id, '1) Команда 1 (qr) \n2) Команда 2 (mem)\n3) Команда 3 (txt)')
+    if message.text.lower() == 'qr':
+        bot.send_message(message.chat.id, 'Пиши команду qr и ссылку через пробел')
+        bot.send_message(message.chat.id, 'qr Https://ya.ru/')
+    elif message.text.lower() == 'mem':
+        print('mem')
+    elif message.text.lower() == 'txt':
+        print('txt')
 
 bot.infinity_polling()
