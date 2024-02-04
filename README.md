@@ -6,5 +6,5 @@
 
 # Зависимости (выполнять в консоли ОС)
 
-pip install pyTelegramBotAPI
-
+# pip install pyTelegramBotAPI
+# pip install qrcode
