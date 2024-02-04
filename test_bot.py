@@ -4,6 +4,9 @@ from random import choice
 import qrcode
 import datetime
 
+
+start_time = datetime.datetime.now()
+
 token='5993558048:AAEwlZC5sc4eyFt9QgO1Js0Xgf9bmDoWRf0'
 
 bot = telebot.TeleBot(token)
@@ -23,7 +26,7 @@ def start_message(message):
 @bot.message_handler(commands=['time'])
 def current_time(message):
     bot.send_message(message.chat.id, f'Твое время - {datetime.datetime.now()}')
-    bot.send_message(message.chat.id, 'cc')
+    bot.send_message(message.chat.id, f'Время с запуска {datetime.datetime.now() - start_time}')
 
 @bot.message_handler(commands=['users'])
 def current_time(message):
