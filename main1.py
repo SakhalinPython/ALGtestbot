@@ -12,6 +12,7 @@ token='5993558048:AAEwlZC5sc4eyFt9QgO1Js0Xgf9bmDoWRf0'
 bot = telebot.TeleBot(token)
 greetings = ['Hello', 'Привет!', 'Как дела?', 'Че по чем!']
 users = dict()
+zametki = dict()
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -21,7 +22,14 @@ def start_message(message):
         users[message.from_user.id] = [message.from_user.first_name, message.chat.id]
     bot.send_message(message.chat.id, f"{message.from_user.first_name},"
                                       f" {choice(greetings)}")
-    bot.send_message(message.chat.id, 'Доступные команды /time , /users, /pictures')
+    bot.send_message(message.chat.id, 'Доступные команды '
+                                      '/time , /users, /pictures, /zam')
+
+@bot.message_handler(commands=['zam'])
+def zam(message):
+    if message.from_user.id in zametki:
+        print(zametki)
+        bot.send_message(message.chat.id, "/".join(zametki[message.from_user.id]))
 
 @bot.message_handler(commands=['time'])
 def current_time(message):
@@ -51,7 +59,10 @@ def my_text(message):
         img = qr.make_image()
         img.save(f'{message.from_user.id}_test.png')
         bot.send_photo(message.chat.id, open(f'{message.from_user.id}_test.png', 'rb'))
-
+    elif temp[0].lower() == 'заметка' and len(temp) >= 2:
+        temp.pop(0)
+        temp = " ".join(temp)
+        zametki[message.from_user.id] = [temp, str(datetime.datetime.now())]
 
     if message.text.lower() == 'покажи список':
         bot.send_message(message.chat.id, '1) Команда 1 (qr) \n2) Команда 2 (mem)\n3) Команда 3 (txt)')
@@ -62,5 +73,10 @@ def my_text(message):
         bot.send_video(message.chat.id, open('video/Cat dancing meme.mp4', 'rb'))
     elif message.text.lower() == 'txt':
         print('txt')
+
+
+@bot.message_handler(content_types=['voice'])
+def send_voice(message):
+    bot.send_message(message.chat.id, 'Голосовое получили')
 
 bot.infinity_polling()
